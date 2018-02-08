@@ -1,0 +1,6 @@
+[package]
+name = "rust-usdt-helloworld"
+version = "0.1.0"
+authors = ["anton whalley <anton@venshare.com>"]
+
+[dependencies]
