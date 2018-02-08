@@ -12,5 +12,5 @@ Cargo.lock
 # These are build files from c
 **/*.o
 **/*.so
-
+src/hello
 
