@@ -35,7 +35,7 @@ As root run the dtrace script to see the probes
 73093 myserv3361 rust-usdt-helloworld                          sayhello query-receive
 ```
 
-Now run the a dtrace to consume the probe.
+Now run a dtrace script to consume the probe.
 ```
 # dtrace -s tools/probe.d
 sayhello Fired 3
