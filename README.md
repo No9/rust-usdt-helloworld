@@ -32,7 +32,7 @@ This should "Just Work"&trade;
 As root run the dtrace script to see the probes
 ```
 # dtrace -l | grep myserv
-69643 myserv37329       libhello.so                          sayhello query-receive
+73093 myserv3361 rust-usdt-helloworld                          sayhello query-receive
 ```
 
 Now run the a dtrace to consume the probe.
