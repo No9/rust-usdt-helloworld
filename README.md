@@ -1,10 +1,8 @@
 # rust-usdt-helloworld
 
-A basic example of Userland Statically Defined Tracing in rust
+A basic example of Userland Statically Defined Tracing in Rust using native C.
 
-Other projects that use DTrace in rust depend on `asm!` which is currently only available in nightly.
-
-This is a very basic sample of how to create a native c dtrace probe and include it into a rust project built with stable.
+Inspired by [rust-libprobe](https://github.com/cuviper/rust-libprobe) but that is Linux focused and uses `asm!` which is currently only available in nightly.
 
 It's based on the sample given in the [dtrace.org website](http://dtrace.org/guide/chp-usdt.html) 
 
@@ -23,47 +21,34 @@ Thread model: posix
 InstalledDir: /usr/bin
 ```
 
-## build 
+## usage 
 
-Build the native object
-
-```
-% cd native 
-% cc -c libhello.c
-```
-
-Generate the trace provider object using the .d script and the libhello object
+This should "Just Work"&trade;
 
 ```
-% dtrace -G -s trace_hello.d libhello.o
+% cargo run
 ```
 
-Build the shared object
-
-```
-% cc trace_hello.o libhello.o -shared -o libhello.o.so 
-```
-
-Build the rust app
-
-```
-% cd ../src
-% rustc hello.rs -L ../native/
-```
-
-## run
-
-```
-% cp ../native/libhello.o.so libhello.so
-% set env LD_LIBRARY_PATH .
-% ./hello
-```
-
-## see the probe
-
-In a new shell as root list the running myserv probes
-
+As root run the dtrace script to see the probes
 ```
 # dtrace -l | grep myserv
 69643 myserv37329       libhello.so                          sayhello query-receive
+```
+
+Now run the a dtrace to consume the probe.
+```
+# dtrace -s tools/probe.d
+sayhello Fired 3
+sayhello Fired 4
+sayhello Fired 5
+...
+```
+
+
+## notes
+
+The trick here is in the `build.rs` where the trace provider object is generated using the .d script and the "mungled" hello object
+
+```
+% dtrace -G -s trace_hello.d libhello.o
 ```
