@@ -2,13 +2,13 @@ use std::process::Command;
 use std::path::Path;
 
 fn main() {
-    Command::new("gmake")
+    Command::new("make")
         .args(&["clean"])
         .current_dir(&Path::new("./native"))
         .status()
         .unwrap();
 
-    Command::new("gmake")
+    Command::new("make")
         .args(&["static"])
         .current_dir(&Path::new("./native"))
         .status()
